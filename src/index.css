@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Helvetica:wght@400;700&display=swap');
+
+body {
+  font-family: 'Helvetica', sans-serif; 
+  background-color: #f0f0f5; 
+  color: #333; 
+}
+
+.target-list {
+  padding: 30px;
+  max-width: 600px;
+  margin: auto;
+  background-color: #000000; 
+  border-radius: 16px; 
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.target-list h1 {
+  text-align: center;
+  color: #ff3b30; 
+  font-size: 28px; 
+  font-weight: 700; 
+  margin-bottom: 20px;
+}
+
+.target-list h2 {
+  color: #ff3b30; 
+  font-size: 22px; 
+  font-weight: 600; 
+  text-align: center;
+  margin: 20px 0 10px;
+}
+
+.target-list form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.target-list input {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.target-list input:focus {
+  border-color: #ff3b30; /* Mudança na borda ao focar */
+  outline: none;
+}
+
+.target-list button {
+  padding: 12px;
+  background-color: #ff3b30; /* Cor de fundo dos botões */
+  color: white; 
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  font-size: 16px;
+  margin-top: 10px; /* Espaçamento entre botões */
+}
+
+.target-list button:hover {
+  background-color: #e63946; /* Cor ao passar o mouse */
+  transform: translateY(-2px); /* Efeito de leve aumento */
+}
+
+.target-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.target-list li {
+  padding: 15px; 
+  margin: 10px 0;
+  background-color: #434141; 
+  border-radius: 10px;
+  color: #ffffff; 
+  font-size: 18px; 
+  display: flex;
+  justify-content: space-between; /* Alinha o conteúdo dos itens da lista */
+  align-items: center; /* Centraliza verticalmente */
+  transition: background-color 0.3s, transform 0.2s; 
+}
+
+.target-list li:hover {
+  background-color: #ff3b30; 
+  color: rgb(255, 255, 255); 
+  transform: translateY(-2px); 
+}
+
+.target-list li button {
+  padding: 5px 10px;
+  background-color: #dc3545; /* Cor do botão de exclusão */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.target-list li button:hover {
+  background-color: #c82333; /* Cor ao passar o mouse */
+}
+
+.todo-list {
+  margin-top: 20px;
+}
+
+.todo-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.todo-list li {
+  padding: 12px; 
+  margin: 5px 0;
+  background-color: #e5e5ea; 
+  border-radius: 10px;
+  color: #333; 
+  font-size: 16px; 
+  display: flex;
+  justify-content: space-between; /* Alinha o conteúdo dos itens da lista */
+  align-items: center; /* Centraliza verticalmente */
+}
