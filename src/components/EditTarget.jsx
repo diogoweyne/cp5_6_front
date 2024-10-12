@@ -1,17 +1,33 @@
 import React, { useState } from 'react';
+import { updateTarget } from '../api';
+import useApi from '../hooks/useApi';
 
 const EditTarget = ({ target, setEditingTarget }) => {
   const [title, setTitle] = useState(target.title);
   const [description, setDescription] = useState(target.description); 
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const {currentTarget} = useApi()
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
    
+  //   setEditingTarget(false);
+  // };
+
+  const handleEditTarget = async (e) => {
+    e.preventDefault();
+    const updatedTarget = {
+      ...currentTarget,
+      title: title,
+      description: description,
+    };
+    await updateTarget(currentTarget.id, updatedTarget);
     setEditingTarget(false);
+    refreshTargets();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleEditTarget}>
       <input
         type="text"
         value={title}

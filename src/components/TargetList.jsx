@@ -3,7 +3,6 @@ import {
   fetchTargets,
   createTarget,
   deleteTarget,
-  updateTarget,
   fetchTodosByTarget,
   createTodo,
   deleteTodo,
@@ -12,17 +11,19 @@ import {
 import AddTodo from './AddTodo';
 import EditTarget from './EditTarget';
 import EditTodo from './EditTodo';
-
+import useApi from '../hooks/useApi';
 
 const TargetList = () => {
   const [targets, setTargets] = useState([]);
-  const [currentTarget, setCurrentTarget] = useState(null);
+  //const [currentTarget, setCurrentTarget] = useState(null);
   const [editingTarget, setEditingTarget] = useState(false);
   const [todos, setTodos] = useState([]);
   const [currentTodo, setCurrentTodo] = useState(null);
   const [editingTodo, setEditingTodo] = useState(false);
   const [newTargetTitle, setNewTargetTitle] = useState('');
   const [newTargetDescription, setNewTargetDescription] = useState('');
+
+  const {currentTarget, setCurrentTarget} = useApi()
 
   useEffect(() => {
     refreshTargets();
@@ -58,18 +59,6 @@ const TargetList = () => {
     refreshTargets();
     setTodos([]); 
     setCurrentTarget(null); 
-  };
-
-  const handleEditTarget = async (e) => {
-    e.preventDefault();
-    const updatedTarget = {
-      ...currentTarget,
-      title: currentTarget.title,
-      description: currentTarget.description,
-    };
-    await updateTarget(currentTarget.id, updatedTarget);
-    setEditingTarget(false);
-    refreshTargets();
   };
 
   const handleAddTodo = async (todoTitle) => {
