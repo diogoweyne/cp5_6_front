@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const EditTodo = ({ todo, setEditingTodo, editTodo }) => {
   const [title, setTitle] = useState(todo.title);
@@ -23,6 +23,7 @@ const EditTodo = ({ todo, setEditingTodo, editTodo }) => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Descrição do TODO"
+        required
       />
       <button type="submit">Alterar TODO</button>
     </form>

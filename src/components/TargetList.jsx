@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   fetchTargets,
   createTarget,
@@ -7,11 +7,12 @@ import {
   createTodo,
   deleteTodo,
   updateTodo,
-} from '../api';
-import AddTodo from './AddTodo';
-import EditTarget from './EditTarget';
-import EditTodo from './EditTodo';
-import useApi from '../hooks/useApi';
+  fetchAllTodos,
+} from "../api";
+import AddTodo from "./AddTodo";
+import EditTarget from "./EditTarget";
+import EditTodo from "./EditTodo";
+import useApi from "../hooks/useApi";
 
 const TargetList = () => {
   const [targets, setTargets] = useState([]);
@@ -20,18 +21,24 @@ const TargetList = () => {
   const [todos, setTodos] = useState([]);
   const [currentTodo, setCurrentTodo] = useState(null);
   const [editingTodo, setEditingTodo] = useState(false);
-  const [newTargetTitle, setNewTargetTitle] = useState('');
-  const [newTargetDescription, setNewTargetDescription] = useState('');
+  const [newTargetTitle, setNewTargetTitle] = useState("");
+  const [newTargetDescription, setNewTargetDescription] = useState("");
 
-  const {currentTarget, setCurrentTarget} = useApi()
+  const { currentTarget, setCurrentTarget } = useApi();
 
   useEffect(() => {
     refreshTargets();
+    refreshTodos();
   }, []);
 
   const refreshTargets = async () => {
     const response = await fetchTargets();
     setTargets(response.data);
+  };
+
+  const refreshTodos = async () => {
+    const response = await fetchAllTodos();
+    setTodos(response.data);
   };
 
   const handleTargetClick = async (targetId) => {
@@ -49,23 +56,23 @@ const TargetList = () => {
       todo: [],
     };
     await createTarget(newTarget);
-    setNewTargetTitle('');
-    setNewTargetDescription('');
+    setNewTargetTitle("");
+    setNewTargetDescription("");
     refreshTargets();
   };
 
   const handleDeleteTarget = async (targetId) => {
     await deleteTarget(targetId);
     refreshTargets();
-    setTodos([]); 
-    setCurrentTarget(null); 
+    setTodos([]);
+    setCurrentTarget(null);
   };
 
   const handleAddTodo = async (todoTitle) => {
     const newTodo = {
       title: todoTitle,
       isComplete: false,
-      description: '', 
+      description: "",
       targetId: currentTarget,
     };
     await createTodo(newTodo);
@@ -73,6 +80,7 @@ const TargetList = () => {
   };
 
   const handleDeleteTodo = async (todoId) => {
+    console.log(todoId)
     await deleteTodo(todoId);
     handleTargetClick(currentTarget);
   };
@@ -80,7 +88,7 @@ const TargetList = () => {
   const handleEditTodo = async (todo) => {
     const updatedTodo = {
       ...todo,
-      title: todo.title, 
+      title: todo.title,
     };
     await updateTodo(todo.id, updatedTodo);
     handleTargetClick(currentTarget);
@@ -96,49 +104,76 @@ const TargetList = () => {
           onChange={(e) => setNewTargetTitle(e.target.value)}
           placeholder="Novo Target"
           required
+          minLength={3}
         />
         <input
           type="text"
           value={newTargetDescription}
           onChange={(e) => setNewTargetDescription(e.target.value)}
           placeholder="Descrição do Target"
+          required
+          minLength={3}
         />
         <button type="submit">Adicionar Target</button>
       </form>
 
       <ul>
-        {targets.map(target => (
+        {targets.map((target) => (
           <li key={target.id} onClick={() => handleTargetClick(target.id)}>
             {target.title}
-            <button onClick={() => { setCurrentTarget(target); setEditingTarget(true); }}>Editar</button>
-            <button onClick={() => handleDeleteTarget(target.id)}>Excluir</button>
+            <button
+              onClick={() => {
+                setCurrentTarget(target);
+                setEditingTarget(true);
+              }}
+            >
+              Editar
+            </button>
+            <button onClick={() => handleDeleteTarget(target.id)}>
+              Excluir
+            </button>
           </li>
         ))}
       </ul>
 
       {editingTarget && currentTarget && (
-        <EditTarget target={currentTarget} setEditingTarget={setEditingTarget} />
+        <EditTarget
+          target={currentTarget}
+          setEditingTarget={setEditingTarget}
+        />
       )}
 
       <h2>TODOs</h2>
       {currentTarget && (
         <>
           <AddTodo targetId={currentTarget} addTodo={handleAddTodo} />
-          <ul>
-            {todos.map(todo => (
-              <li key={todo.id}>
-                {todo.title}
-                <button onClick={() => { setCurrentTodo(todo); setEditingTodo(true); }}>Editar</button>
-                <button onClick={() => handleDeleteTodo(todo.id)}>Excluir</button>
-              </li>
-            ))}
-          </ul>
 
           {editingTodo && currentTodo && (
-            <EditTodo todo={currentTodo} setEditingTodo={setEditingTodo} editTodo={handleEditTodo} />
+            <EditTodo
+              todo={currentTodo}
+              setEditingTodo={setEditingTodo}
+              editTodo={handleEditTodo}
+            />
           )}
         </>
       )}
+
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>
+            {todo.title}
+            <button
+              onClick={() => {
+                setCurrentTodo(todo);
+                setEditingTodo(true);
+              }}
+            >
+              Editar
+            </button>
+            <button onClick={() => handleDeleteTodo(todo.id)}>Excluir</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

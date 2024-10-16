@@ -17,11 +17,11 @@ const EditTarget = ({ target, setEditingTarget }) => {
   const handleEditTarget = async (e) => {
     e.preventDefault();
     const updatedTarget = {
-      ...currentTarget,
+      ...target,
       title: title,
       description: description,
     };
-    await updateTarget(currentTarget.id, updatedTarget);
+    await updateTarget(target.id, updatedTarget);
     setEditingTarget(false);
     refreshTargets();
   };
@@ -39,6 +39,7 @@ const EditTarget = ({ target, setEditingTarget }) => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Descrição do Target"
+        required
       />
       <button type="submit">Alterar Target</button>
     </form>
