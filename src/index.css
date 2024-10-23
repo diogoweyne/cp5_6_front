@@ -47,25 +47,25 @@ body {
 }
 
 .target-list input:focus {
-  border-color: #ff3b30; /* Mudança na borda ao focar */
+  border-color: #ff3b30; 
   outline: none;
 }
 
 .target-list button {
   padding: 12px;
-  background-color: #ff3b30; /* Cor de fundo dos botões */
+  background-color: #ff3b30; 
   color: white; 
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
   font-size: 16px;
-  margin-top: 10px; /* Espaçamento entre botões */
+  margin-top: 10px; 
 }
 
 .target-list button:hover {
-  background-color: #e63946; /* Cor ao passar o mouse */
-  transform: translateY(-2px); /* Efeito de leve aumento */
+  background-color: #e63946; 
+  transform: translateY(-2px);
 }
 
 .target-list ul {
@@ -81,8 +81,8 @@ body {
   color: #ffffff; 
   font-size: 18px; 
   display: flex;
-  justify-content: space-between; /* Alinha o conteúdo dos itens da lista */
-  align-items: center; /* Centraliza verticalmente */
+  justify-content: space-between; 
+  align-items: center; 
   transition: background-color 0.3s, transform 0.2s; 
 }
 
@@ -94,7 +94,7 @@ body {
 
 .target-list li button {
   padding: 5px 10px;
-  background-color: #dc3545; /* Cor do botão de exclusão */
+  background-color: #dc3545; 
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -125,4 +125,27 @@ body {
   display: flex;
   justify-content: space-between; /* Alinha o conteúdo dos itens da lista */
   align-items: center; /* Centraliza verticalmente */
+}
+
+.item-buttons{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.target-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.target-header button{
+  background-color: #434141;
+  padding: 5px 8px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.target-header button:hover{
+  background-color: #363535;
 }

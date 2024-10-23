@@ -13,6 +13,8 @@ import AddTodo from "./AddTodo";
 import EditTarget from "./EditTarget";
 import EditTodo from "./EditTodo";
 import useApi from "../hooks/useApi";
+import { IoReloadOutline } from "react-icons/io5";
+import { TfiReload } from "react-icons/tfi";
 
 const TargetList = () => {
   const [targets, setTargets] = useState([]);
@@ -27,8 +29,7 @@ const TargetList = () => {
   const { currentTarget, setCurrentTarget } = useApi();
 
   useEffect(() => {
-    refreshTargets();
-    refreshTodos();
+    reloadData();
   }, []);
 
   const refreshTargets = async () => {
@@ -39,6 +40,13 @@ const TargetList = () => {
   const refreshTodos = async () => {
     const response = await fetchAllTodos();
     setTodos(response.data);
+  };
+
+  const reloadData = async () => {
+    await refreshTargets();
+    await refreshTodos();
+    setCurrentTarget(null);
+    setCurrentTodo(null);
   };
 
   const handleTargetClick = async (targetId) => {
@@ -80,7 +88,7 @@ const TargetList = () => {
   };
 
   const handleDeleteTodo = async (todoId) => {
-    console.log(todoId)
+    console.log(todoId);
     await deleteTodo(todoId);
     handleTargetClick(currentTarget);
   };
@@ -95,8 +103,14 @@ const TargetList = () => {
   };
 
   return (
-    <div className="target-list">
-      <h1>Targets</h1>
+    <main className="target-list">
+      <div className="target-header">
+        <span />
+        <h1>Targets</h1>
+        <button onClick={reloadData}>
+          <TfiReload size={30} color="#ff0000" />
+        </button>
+      </div>
       <form onSubmit={handleAddTarget}>
         <input
           type="text"
@@ -121,22 +135,24 @@ const TargetList = () => {
         {targets.map((target) => (
           <li key={target.id} onClick={() => handleTargetClick(target.id)}>
             {target.title}
-            <button
-              onClick={() => {
-                setCurrentTarget(target);
-                setEditingTarget(true);
-              }}
-            >
-              Editar
-            </button>
-            <button onClick={() => handleDeleteTarget(target.id)}>
-              Excluir
-            </button>
+            <div className="item-buttons">
+              <button
+                onClick={() => {
+                  setCurrentTarget(target);
+                  setEditingTarget(true);
+                }}
+              >
+                Editar
+              </button>
+              <button onClick={() => handleDeleteTarget(target.id)}>
+                Excluir
+              </button>
+            </div>
           </li>
         ))}
       </ul>
 
-      {editingTarget && currentTarget && (
+      {editingTarget && currentTarget !== null && (
         <EditTarget
           target={currentTarget}
           setEditingTarget={setEditingTarget}
@@ -162,19 +178,21 @@ const TargetList = () => {
         {todos.map((todo) => (
           <li key={todo.id}>
             {todo.title}
-            <button
-              onClick={() => {
-                setCurrentTodo(todo);
-                setEditingTodo(true);
-              }}
-            >
-              Editar
-            </button>
-            <button onClick={() => handleDeleteTodo(todo.id)}>Excluir</button>
+            <div className="item-buttons">
+              <button
+                onClick={() => {
+                  setCurrentTodo(todo);
+                  setEditingTodo(true);
+                }}
+              >
+                Editar
+              </button>
+              <button onClick={() => handleDeleteTodo(todo.id)}>Excluir</button>
+            </div>
           </li>
         ))}
       </ul>
-    </div>
+    </main>
   );
 };
 
